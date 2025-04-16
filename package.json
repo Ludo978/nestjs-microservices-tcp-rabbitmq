@@ -1,10 +1,22 @@
 {
   "name": "backend",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
-  "private": true,
-  "license": "UNLICENSED",
+  "description": "NestJS microservices with RabbitMQ and TCP",
+  "author": "Ludo978",
+  "private": false,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ludo978/nestjs-microservices-tcp-rabbitmq.git"
+  },
+  "keywords": [
+    "nestjs",
+    "microservices",
+    "rabbitmq",
+    "tcp",
+    "typescript",
+    "docker"
+  ],
   "scripts": {
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
   },
