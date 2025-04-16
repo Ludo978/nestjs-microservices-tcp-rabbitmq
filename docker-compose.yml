@@ -1,0 +1,47 @@
+services:
+  mongodb:
+    image: mongo:latest
+    ports:
+      - '27017:27017'
+
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:4-management
+    environment:
+      RABBITMQ_DEFAULT_USER: rabbitmq
+      RABBITMQ_DEFAULT_PASS: rabbitmq
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+
+  gateway:
+    container_name: gateway
+    build:
+      dockerfile: Dockerfile
+      args:
+        service_name: gateway
+    ports:
+      - '3000:3000'
+    depends_on:
+      - user
+      - offer
+
+  user:
+    container_name: user
+    build:
+      dockerfile: Dockerfile
+      args:
+        service_name: user
+    depends_on:
+      - mongodb
+      - rabbitmq
+
+  offer:
+    container_name: offer
+    build:
+      dockerfile: Dockerfile
+      args:
+        service_name: offer
+    depends_on:
+      - mongodb
+      - rabbitmq
