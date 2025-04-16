@@ -7,6 +7,7 @@ import {
 } from 'libs/rabbitmq/rabbitmq.constants';
 import { Model } from 'mongoose';
 import { Offer } from './schemas/offer.schema';
+import { OFFER_QUEUE } from './constants';
 
 @Injectable()
 export class OfferService {
@@ -19,7 +20,6 @@ export class OfferService {
     console.log('Creating offer:', data);
     const offer = new this.offerModel(data);
     await offer.save();
-    console.log('Offer created:', offer);
     await this.amqpConnection.publish(MAIN_EXCHANGE, OFFER_CREATED_EVENT, {
       data,
     });
@@ -28,11 +28,11 @@ export class OfferService {
 
   @RabbitSubscribe({
     exchange: MAIN_EXCHANGE,
-    routingKey: 'OFFER_CREATED_EVENT',
-    queue: 'offer_queue',
+    routingKey: OFFER_CREATED_EVENT,
+    queue: OFFER_QUEUE,
   })
   handleOfferCreated(offer: any) {
-    console.log('BBBBBBBCCCBB:', offer);
+    console.log('handleOfferCreated in offer-service', offer);
   }
 
   getAll() {

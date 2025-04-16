@@ -2,23 +2,24 @@ import { Body, Controller } from '@nestjs/common';
 import { OfferService } from './offer.service';
 import { MessagePattern } from '@nestjs/microservices';
 import { Offer } from './schemas/offer.schema';
+import { TCP } from 'libs/tcp/tcp.constants';
 
 @Controller()
 export class OfferController {
   constructor(private readonly offerService: OfferService) {}
 
-  @MessagePattern({ cmd: 'create' })
-  createOffer(@Body() offer: Offer) {
+  @MessagePattern({ cmd: TCP.CREATE })
+  create(@Body() offer: Offer) {
     return this.offerService.create(offer);
   }
 
-  @MessagePattern({ cmd: 'getAll' })
+  @MessagePattern({ cmd: TCP.GET_ALL })
   getAll() {
     return this.offerService.getAll();
   }
 
-  @MessagePattern({ cmd: 'getOffer' })
-  getOffer(@Body() data: { id: string }) {
+  @MessagePattern({ cmd: TCP.GET_ONE })
+  getOne(@Body() data: { id: string }) {
     return this.offerService.getOne(data.id);
   }
 }

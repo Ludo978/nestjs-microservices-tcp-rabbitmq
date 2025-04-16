@@ -1,5 +1,6 @@
 import { RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
 import { Injectable } from '@nestjs/common';
+import { USER_QUEUE } from './constants';
 import {
   MAIN_EXCHANGE,
   OFFER_CREATED_EVENT,
@@ -7,15 +8,14 @@ import {
 
 @Injectable()
 export class UserService {
-  get(data: any): string {
-    console.log('Received data:', data);
-    return 'Ludovic Robbe';
+  getAll(): string {
+    return 'John Doe';
   }
 
   @RabbitSubscribe({
     exchange: MAIN_EXCHANGE,
     routingKey: OFFER_CREATED_EVENT,
-    queue: 'user_queue',
+    queue: USER_QUEUE,
   })
   handleOfferCreated(offer: any) {
     console.log('Received offer created event in user service:', offer);

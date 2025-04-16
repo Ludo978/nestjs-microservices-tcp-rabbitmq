@@ -4,6 +4,8 @@ services:
     image: mongo:latest
     ports:
       - '27017:27017'
+    volumes:
+      - ./data:/data/db
 
   rabbitmq:
     container_name: rabbitmq
@@ -25,6 +27,7 @@ services:
       - '3000:3000'
     volumes:
       - ./services/gateway:/app
+      - ./libs:/app/libs
     depends_on:
       - user
       - offer

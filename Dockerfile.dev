@@ -6,9 +6,6 @@ ENV NODE_ENV=development
 
 WORKDIR /app
 
-# COPY ./services/$service_name /app
-# COPY libs /app/libs
-
 COPY ./services/$service_name/package.json /app/package.json
 
 RUN yarn install --frozen-lockfile
